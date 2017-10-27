@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/><!--, user-scalable=no"/>-->
+        <title>Crack the Circuit: A puzzle game by The Universe and More</title>
+        <link rel="icon" type="image/png" href="assets/images/icon.png">
+        <script src="libs/jquery-3.2.1.min.js"></script>
+        <script src="libs/phaser.min.js"></script> <!--switch to phaser.min.js for release-->
+        <script src="js/Boot.js"></script>
+        <script src="js/Preloader.js"></script>
+        <script src="js/Blueprint.js"></script>
+        <script src="js/TutorialManager.js"></script>
+        <script src="js/ComponentCards.js"></script>
+        <script src="js/CircuitSolver.js"></script>
+        <script src="js/CircuitChecker.js"></script>
+        <script src="js/GameState.js"></script>
+        <script src="js/Menu.js"></script>
+        <script src="js/Background.js"></script>
+        <script src="js/CircuitBox.js"></script>
+        
+        <script src="https://cdn.ravenjs.com/3.18.1/raven.min.js" crossorigin="anonymous"></script>
+        <!--<link href="libs/css/bootstrap.min.css" rel="stylesheet">-->
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css"/>
+        
+        <!---- Google Fonts ----->
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
+    </head>
+    <body>
+        <div id="topBuffer"></div>
+        <div id="gameContainer"></div>
+        <br><br>
+        <div class="col-6" id="fsEl"><img id="fullscreenButton" class="bottomBtn" src="assets/images/goFullscreen.png" alt="Expand your mind"></div>
+        <div class="col-6" id="surveyEl"><img id="surveyButton" class="bottomBtn" src="assets/images/takeSurvey.png" alt="Help us improve"></div>
+        <script type="text/javascript">
+            
+            window.onload = function() {
+                Raven.config('https://c271e132b3c6411bb50917cd4339e9a7@sentry.io/225883').install();
+                if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+
+                    //console.log("On mobile");
+                    game = new Phaser.Game(960,640, Phaser.CANVAS, 'gameContainer', null, true);
+
+                    game.state.add('Boot', CrackTheCircuit.Boot);
+                    game.state.add('Preloader', CrackTheCircuit.Preloader);
+
+//                    $(window).resize(function() { window.resizeGame(); } );
+//
+//                    window.addEventListener("orientationchange", function() {
+//                        // Announce the new orientation number
+//                        window.resizeGameOrientationChange();
+//                    }, false);
+
+                    this.game.state.start('Boot');
+                    
+                    $(window).on("orientationchange",function(){
+                        this.orientationChange();
+                    });
+                    
+                    $(fsEl).remove();
+                    $(surveyEl).remove();
+                }
+                else {
+                    game = new Phaser.Game(960,640, Phaser.CANVAS, 'gameContainer', null, true);
+
+                    this.game.state.add('Boot', CrackTheCircuit.Boot);
+                    this.game.state.add('Preloader', CrackTheCircuit.Preloader);
+
+                    this.game.state.start('Boot');
+                    
+                    $(fullscreenButton).click(function() {
+                        window.gofull();
+                    });
+                    
+                    $(surveyButton).click(function() {
+                        window.open("https://goo.gl/forms/GOBH2wq8Fc9STE482");
+                    });
+                }
+            }
+            
+            window.orientationChange = function(e) {
+//                game.stage.scale.startFullScreen();
+//                game.scale.startFullScreen();
+                //this.game.scale.setGameSize(1.4*window.innerWidth,(640/960)*1.4*window.innerWidth); // et voila!
+                
+                if(window.innerWidth < window.innerHeight) { //if changed to portrait
+                    //Phaser.ScaleManager.SHOW_ALL = 0;
+                } else { //if changed to landscape
+                    //Phaser.ScaleManager.SHOW_ALL = 0;
+                }
+            }
+            
+            function cropEdges() {
+                
+                //disable scale manager
+                
+            }
+            
+            window.gofull = function() {
+                
+                if(game.scale.isFullScreen)
+                {
+                    //game.scale.stopFullScreen();
+                }
+                else
+                {
+                    game.scale.startFullScreen(false);
+                }
+            }
+            
+            window.resizeGame = function() {
+                
+                if(window.screen.availWidth/window.screen.availHeight < 960/640) {
+                    game.scale.maxWidth = window.innerWidth;
+                    game.scale.maxHeight = this.game.scale.maxWidth * 640/960;
+                } else {
+                    game.scale.maxHeight = 0.82*window.innerHeight;
+                    game.scale.maxWidth = this.game.scale.maxHeight * 960/640;
+                }
+
+                game.scale.pageAlignHorizontally = true;
+                game.scale.pageAlignVertically = true;
+
+                game.scale.refresh();
+            }
+            
+            window.resizeGameOrientationChange = function() {
+                
+                if(window.screen.availWidth/window.screen.availHeight < 960/640) {
+                    game.scale.maxWidth = window.innerWidth;
+                    game.scale.maxHeight = this.game.scale.maxWidth * 640/960;
+                } else {
+                    game.scale.maxHeight = 0.82*window.innerHeight;
+                    game.scale.maxWidth = this.game.scale.maxHeight * 960/640;
+                }
+
+                game.scale.pageAlignHorizontally = true;
+                game.scale.pageAlignVertically = true;
+
+                game.scale.refresh();
+            }
+            
+        </script>
+        
+        <!--GOOGLE ANALYTICS-->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-53300416-2', 'auto');
+          ga('send', 'pageview');
+        </script>
+        
+        <footer>
+            <p><span>© 2017 <a href="http://www.theuniverseandmore.com" target="_blank">The Universe and More</a>, Inc.</span><span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><span><a href="assets/images/WebsiteTermsOfUseAndPrivacyPolicy.pdf"  target="_blank">Terms, Conditions, Privacy</a></span><span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span><span>Contact: <a href="mailto:matt@theuniverseandmore.com">
+                matt@theuniverseandmore.com</a></span></p>
+        </footer>
+    </body>
+    
+</html>

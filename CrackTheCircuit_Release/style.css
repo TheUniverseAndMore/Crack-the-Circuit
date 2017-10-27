@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    /*background-color: #122024;*/
+    background-image: url("assets/images/siteBG.png");
+    background-repeat: repeat;
+}
+
+canvas {
+    background-color: #122024;
+    
+    /* for pixel rounding to remove blurred effect
+    
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;*/
+}
+
+a {
+    font-family: sans-serif;
+    color: white;
+}
+
+#gameContainer {
+    padding-top: 8px;
+    cursor: default;
+    /*cursor: none;*/
+}
+
+.col-6 {
+    width: 50%;
+    float: left;
+    margin-top: -10px;
+}
+
+.bottomBtn {
+    margin-top: -15px;
+    margin-bottom: 25px;
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 290px;
+    cursor: pointer; 
+}
+
+#surveyButton {
+    float: left;
+    padding-left:20px;
+    margin-left:-10px;
+    cursor: pointer; 
+}
+
+#fullscreenButton {
+    float:right;
+    padding-right:20px;
+    cursor: pointer; 
+}
+
+#topBuffer {
+    height:20px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    background-color: #122024;
+    color: #009fa9;
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+    font-size: 18px;
+}
+
+footer a {
+    color: #92d6d6;
+}
+
+@media screen and (max-width: 768px) {
+    footer {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    footer {
+        font-size: 12px;
+    }
+}
+
+@media screen and (orientation:portrait) { 
+    #gameContainer {
+/*
+        overflow:hidden;
+        width:140%;
+        left:20%;
+*/
+    }
+}
+
+/*@media screen and (orientation:landscape) { 
+    #gameContainer {
+        margin-top: 40px;
+    }
+}*/
